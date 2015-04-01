@@ -16,24 +16,18 @@
 		var player;
 		var aliens;
 		var cursors;
-		var starfield;
 
 
 		function preload() {
 
 		    game.load.spritesheet('invader', 'img/enemies/enemyRed1.png', 93, 93);
 		    game.load.image('ship', 'img/player/playerShip1_blue.png');
-		    game.load.image('starfield', 'img/starfield.png');
-		    game.load.image('background', 'img/space-logo.png');
 
 		}
 
 		function create() {
 
 		    game.physics.startSystem(Phaser.Physics.ARCADE);
-
-		    //  Espacio de Estrellas
-		    starfield = game.add.tileSprite(0, 0, 800, 600, 'starfield');
 
 		    //  Jugador
 		    player = game.add.sprite(400, 500, 'ship');
@@ -68,9 +62,6 @@
 
 
 		function update() {
-
-		    //  Hace que el campo de estrellas se deslice
-		    starfield.tilePosition.y += 2;
 
 		    if (player.alive)
 		    {
