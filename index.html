@@ -17,8 +17,8 @@
 		function preload() {
 
 		    game.load.image('bullet', 'img/lasers/laserBlue01.png');
-		    game.load.image('enemyBullet', 'img/lasers/laserBlue02.png');
-		    game.load.spritesheet('invader', 'img/enemy.png', 32, 32);
+		    game.load.image('enemyBullet', 'img/lasers/laserRed08.png');
+		    game.load.spritesheet('invader', 'img/enemies/enemyRed1.png', 93, 93);
 		    game.load.image('ship', 'img/player/playerShip1_blue.png');
 		    game.load.spritesheet('kaboom', 'img/kaboom.png', 128, 128);
 		    game.load.image('starfield', 'img/starfield.png');
@@ -116,11 +116,13 @@
 
 		function createAliens () {
 
-		    for (var y = 0; y < 4; y++)
+            // Se crean aliens en 3 filas 5 columnas = 15 aliens
+		    for (var y = 0; y < 3; y++)
 		    {
-		        for (var x = 0; x < 10; x++)
+		        for (var x = 0; x < 5; x++)
 		        {
-		            var alien = aliens.create(x * 48, y * 50, 'invader');
+			       // Se crea cada alien 100px de distancia en x y 80px de distancia en y
+		            var alien = aliens.create(x * 100, y * 80, 'invader');
 		            alien.anchor.setTo(0.5, 0.5);
 		            //alien.animations.add('fly', [ 0, 1, 2, 3 ], 20, true);
 		            //alien.play('fly');
