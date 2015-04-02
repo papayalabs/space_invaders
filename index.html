@@ -16,12 +16,15 @@
 		var player;
 		var aliens;
 		var cursors;
+		var lasers;
+		var laserTime = 0;
 
 
 		function preload() {
 
 		    game.load.spritesheet('invader', 'img/enemies/enemyRed1.png', 93, 93);
 		    game.load.image('ship', 'img/player/playerShip1_blue.png');
+     		game.load.image('laser', 'img/lasers/laserBlue01.png');
 
 		}
 
@@ -38,6 +41,12 @@
 		    aliens = game.add.group();
 		    aliens.enableBody = true;
 		    aliens.physicsBodyType = Phaser.Physics.ARCADE;
+		
+		    //  Laseres
+		    lasers = game.add.group();
+		    lasers.enableBody = true;
+		    lasers.physicsBodyType = Phaser.Physics.ARCADE;
+		    lasers.createMultiple(100, 'laser');
 
             // Crear Enemigos
             // Se crean aliens en 3 filas 5 columnas = 15 aliens
@@ -55,8 +64,9 @@
 		    aliens.x = 100;
 		    aliens.y = 50;
 	  		    
-		    //  Controles de keyboard
+		    //  Controles de keyboard y mouse
 		    cursors = game.input.keyboard.createCursorKeys();
+		    fire = game.input.activePointer;
 
 		}
 
@@ -85,6 +95,12 @@
 		        {
 		            player.body.velocity.y = 200;
 		        }
+		
+		        // Dispara si se presiona el mouse
+		        if (fire.isDown)
+				{
+					fireLaser();
+				}	
 
 		    }
 
@@ -92,6 +108,22 @@
 		
 		function render() {
 			
+		}
+		
+		function fireLaser() {
+
+		    if (game.time.now > laserTime)
+		    {
+		        laser = lasers.getFirstExists(false);
+
+		        if (laser)
+		        {
+		            laser.reset(player.x, player.y + 8);
+		            laser.body.velocity.y = -400;
+		            laserTime = game.time.now + 200;
+		        }
+		    }
+
 		}
 
     };
