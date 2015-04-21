@@ -2,8 +2,8 @@
 var Preloader = {
 
 	preload: function () {
-        this.load.image('preloaderBackground', 'images/preloader_background.png');
-        this.load.image('preloaderBar', 'images/preloadr_bar.png');
+        this.load.image('preloaderBackground', 'img/preloader_background.png');
+        this.load.image('preloaderBar', 'img/preloadr_bar.png');
 		this.background = this.add.sprite(0, 0, 'preloaderBackground');
 		this.preloadBar = this.add.sprite(this.game.centerX, this.game.centerY, 'preloaderBar');
 
