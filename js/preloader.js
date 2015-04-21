@@ -1,16 +1,11 @@
 
+
+
 var Preloader = {
 
 	preload: function () {
-        this.load.image('preloaderBackground', 'img/preloader_background.png');
-        this.load.image('preloaderBar', 'img/preloadr_bar.png');
-		this.background = this.add.sprite(0, 0, 'preloaderBackground');
-		this.preloadBar = this.add.sprite(this.game.centerX, this.game.centerY, 'preloaderBar');
-
-		//	This sets the preloadBar sprite as a loader sprite.
-		//	What that does is automatically crop the sprite from 0 to full-width
-		//	as the files below are loaded in.
-		this.load.setPreloadSprite(this.preloadBar);
+		this.load.image('preloaderBackground', 'img/preloader_background.png');
+		this.load.image('preloaderBar', 'img/preloadr_bar.png');
 
 	    this.load.image('main_menu', 'img/space-invaders.jpg');
         this.load.audio('music', 'snd/bgm/Mission Plausible.ogg');
@@ -30,6 +25,12 @@ var Preloader = {
 	},
 
 	create: function () {
+		this.background = this.add.sprite(0, 0, 'preloaderBackground');
+		this.preloadBar = this.add.sprite(this.game.centerX, this.game.centerY, 'preloaderBar');
+		//	This sets the preloadBar sprite as a loader sprite.
+		//	What that does is automatically crop the sprite from 0 to full-width
+		//	as the files below are loaded in.
+		this.load.setPreloadSprite(this.preloadBar);
         this.game.music = this.game.add.audio('music', 1, true);
         this.game.music.play('',0,1,true);
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
