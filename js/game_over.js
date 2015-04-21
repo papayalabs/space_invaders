@@ -3,11 +3,6 @@ var stateText;
 
 var GameOver = {
 
-	preload: function () {
-	    game.load.image('game-over', 'img/game_over.png');
-        game.load.audio('music', 'snd/bgm/Retro Mystic.ogg');
-	},
-
 	create: function () {
       this.game.add.image(40,0,'game-over');
       stateText = game.add.text(game.world.centerX,0,'PRESIONE ESPACIO PARA INICIAR', { font: '32px Arial', fill: '#fff' });

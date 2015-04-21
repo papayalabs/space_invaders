@@ -22,18 +22,6 @@ var alienFireSpeed = 2000;
 
 var Game = {
 	
-	preload: function () {
-
-	    game.load.spritesheet('invader', 'img/enemies/enemy'+alien_colors[game.rnd.integerInRange(0,3)]+game.rnd.integerInRange(1,5)+'.png', 93, 93);
-	    game.load.spritesheet('kaboom', 'img/explode.png', 128, 128);
-	    game.load.image('ship', 'img/player/playerShip'+game.rnd.integerInRange(1,3)+'_'+ship_colors[game.rnd.integerInRange(0,3)]+'.png');
- 		game.load.image('laser', 'img/lasers/laser'+laser_colors[game.rnd.integerInRange(0,1)]+'0'+game.rnd.integerInRange(1,7)+'.png');
- 		game.load.image('alienBullet', 'img/lasers/laser'+laser_colors[game.rnd.integerInRange(0,1)]+'0'+game.rnd.integerInRange(8,9)+'.png');
- 		game.load.image('starfield', 'img/starfield.jpg');
-        game.load.audio('laser', 'snd/sfx/laser2.ogg');
-        game.load.audio('explosion', 'snd/explosion.ogg');
-	},
-
 	create: function() {
 
 	    game.physics.startSystem(Phaser.Physics.ARCADE);
