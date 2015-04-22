@@ -1,16 +1,17 @@
-
+var progress;
 
 
 var Preloader = {
 
 	preload: function () {
+
 		this.background = this.add.sprite(0, 0, 'preloaderBackground');
-		this.preloadBar = this.add.sprite(this.game.centerX, this.game.centerY, 'preloaderBar');
+		this.preloadBar = this.add.sprite(game.world.centerX-125,game.world.centerY, 'preloaderBar');
 		//	This sets the preloadBar sprite as a loader sprite.
 		//	What that does is automatically crop the sprite from 0 to full-width
 		//	as the files below are loaded in.
-		this.load.setPreloadSprite(this.preloadBar);
-		
+
+		this.load.setPreloadSprite(this.preloadBar);	
 	    this.load.image('main_menu', 'img/space-invaders.jpg');
         this.load.audio('music', 'snd/bgm/Mission Plausible.ogg');
 
@@ -27,6 +28,13 @@ var Preloader = {
         this.load.audio('music-end', 'snd/bgm/Retro Mystic.ogg');
 
 	},
+
+    loadUpdate: function() {
+		progress = this.game.add.text(game.world.centerX+200,game.world.centerY+25, this.load.progress+' % ',{ font: '42px Arial', fill: '#fff' });
+	    progress.anchor.setTo(0.5, 0.5);
+	    progress.visible = true;
+	
+    },
 
 	create: function () {
 
