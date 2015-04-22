@@ -34,8 +34,6 @@ var Preloader = {
 
 	create: function () {
 
-        this.game.music = this.game.add.audio('music', 1, true);
-        this.game.music.play('',0,1,true);
 		//	Once the load has finished we disable the crop because we're going to sit in the update loop for a short while as the music decodes
 		this.preloadBar.cropEnabled = false;
 		this.state.start('MainMenu');

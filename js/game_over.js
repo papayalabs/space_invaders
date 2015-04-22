@@ -9,7 +9,7 @@ var GameOver = {
       stateText.anchor.setTo(0.5, 0.5);
       stateText.visible = true;
       game.add.tween(stateText).to( { y: 445 }, 2400, Phaser.Easing.Bounce.Out, true);
-      music = game.add.audio('music');
+      music = game.add.audio('music-end');
       music.loop = true;
       music.play();
 	},
