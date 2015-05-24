@@ -28,7 +28,6 @@ var squareRad;
 var contour;
 var stick;
 var margin;
-var isTouchDevice = 'ontouchstart' in document.documentElement;
 
 var Game = {
 	
@@ -195,8 +194,7 @@ var Game = {
         game.physics.arcade.overlap(lasers, aliens, this.collision, null, this);
         game.physics.arcade.overlap(alienBullets, player, this.alienHitPlayer, null, this);
 
-	    if(isTouchDevice){ //draw joystick if TOUCH_PRESSED
-//		if (this.game.input.activePointer.isDown) {
+        if (!this.game.device.desktop && this.game.input.activePointer.isDown) {
 	            stick.x = game.input.activePointer.x;
 	            stick.y = game.input.activePointer.y;
 	              
