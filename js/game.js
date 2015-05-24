@@ -90,7 +90,6 @@ var Game = {
 	    explosions.createMultiple(30, 'kaboom');
 	
 	    //Botones
-	    button = game.add.button(10, 460, 'button', this.buttonAction, null, 2, 1, 0);
  	    button = game.add.button(660, 460, 'button', this.buttonAction, null, 2, 1, 0);
   
 	    //  Controles de keyboard y mouse
@@ -179,7 +178,7 @@ var Game = {
 	
 	
 	render: function() {
-		
+		console.log(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
 	},
 	
 	
