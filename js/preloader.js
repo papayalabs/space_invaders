@@ -16,7 +16,11 @@ var Preloader = {
 
 	    this.load.spritesheet('invader', 'img/enemies/enemy'+alien_colors[game.rnd.integerInRange(0,3)]+game.rnd.integerInRange(1,5)+'.png', 93, 93);
 	    this.load.spritesheet('kaboom', 'img/explode.png', 128, 128);
+
 	    this.load.image('button', 'img/button.png')
+	    this.load.image('contour', 'img/contour.png')
+		this.load.image('stick', 'img/stick.png')
+		
 	    this.load.image('ship', 'img/player/playerShip'+game.rnd.integerInRange(1,3)+'_'+ship_colors[game.rnd.integerInRange(0,3)]+'.png');
  		this.load.image('laser', 'img/lasers/laser'+laser_colors[game.rnd.integerInRange(0,1)]+'0'+game.rnd.integerInRange(1,7)+'.png');
  		this.load.image('alienBullet', 'img/lasers/laser'+laser_colors[game.rnd.integerInRange(0,1)]+'0'+game.rnd.integerInRange(8,9)+'.png');
