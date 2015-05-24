@@ -19,8 +19,20 @@ var lives = 3;
 var liveString = '';
 var liveText;
 var alienFireSpeed = 2000;
+var button;
 
 var Game = {
+	
+	buttonAction: function() {
+
+	    this.fireLaser();
+
+	},
+	
+	toDrag: function() {
+		player.inputEnabled = true;
+        player.input.enableDrag();
+	},
 	
 	create: function() {
 
@@ -57,12 +69,12 @@ var Game = {
 	    //  El puntaje
 	    score = 0;
 	    scoreString = 'PUNTAJE: ';
-	    scoreText = game.add.text(10, 550, scoreString + score, { font: '18px Arial', fill: '#fff' });
+	    scoreText = game.add.text(10, 10, scoreString + score, { font: '18px Arial', fill: '#fff' });
 
 	    //  Las vidas
 	    lives = 3;
 	    liveString = 'VIDAS: ';
-	    liveText = game.add.text(700, 550, liveString + lives, { font: '18px Arial', fill: '#fff' });
+	    liveText = game.add.text(700, 10, liveString + lives, { font: '18px Arial', fill: '#fff' });
 	
 	    //  Texto
 	    stateText = game.add.text(game.world.centerX,game.world.centerY,' ', { font: '64px Arial', fill: '#fff' });
@@ -76,11 +88,16 @@ var Game = {
 	    //  Un grupo de explosiones
 	    explosions = game.add.group();
 	    explosions.createMultiple(30, 'kaboom');
-
-   
+	
+	    //Botones
+	    button = game.add.button(10, 460, 'button', this.buttonAction, null, 2, 1, 0);
+ 	    button = game.add.button(660, 460, 'button', this.buttonAction, null, 2, 1, 0);
+  
 	    //  Controles de keyboard y mouse
 	    cursors = game.input.keyboard.createCursorKeys();
 	    fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	
+    	game.input.onDown.add(this.toDrag, this);
 
 	},
 
@@ -152,9 +169,14 @@ var Game = {
 	        }
 
 	    }
+	
+		if (button.input.pointerDown(game.input.activePointer.id)) {
+					this.fireLaser();
+		}
         game.physics.arcade.overlap(lasers, aliens, this.collision, null, this);
         game.physics.arcade.overlap(alienBullets, player, this.alienHitPlayer, null, this);
 	},
+	
 	
 	render: function() {
 		
