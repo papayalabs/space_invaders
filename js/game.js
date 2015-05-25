@@ -23,8 +23,6 @@ var button;
 
 var position;
 var stickPosition;
-var delta;
-var squareRad;
 var contour;
 var stick;
 var direction;
@@ -32,14 +30,7 @@ var magnitude;
 
 var Game = {
 	
-	toDrag: function() {
-//	 if (!this.game.device.desktop) {
-		player.inputEnabled = true;
-        player.input.enableDrag();
-        stick.inputEnabled = true;
-        stick.input.enableDrag();
- //    }
-	},
+
 	
 	create: function() {
 
@@ -55,6 +46,7 @@ var Game = {
 	    player = game.add.sprite(400, 500, 'ship');
 	    player.anchor.setTo(0.5, 0.5);
 	    game.physics.enable(player, Phaser.Physics.ARCADE);
+	    player.body.collideWorldBounds = true; //El jugador no puede ir mas lejos de los limites del mundo
 
 	    //  Enemigos
 	    aliens = game.add.group();
@@ -96,26 +88,31 @@ var Game = {
 	    explosions = game.add.group();
 	    explosions.createMultiple(30, 'kaboom');
 	
-	    //Botones
+	    //Boton para moviles
  	    button = game.add.button(660, 460, 'button', this.buttonAction, null, 2, 1, 0);
 
-        //Joystick
-		position=new Phaser.Point(0,0); 
-		stickPosition=new Phaser.Point(0,0); 
+        //Joystick para moviles
+		position=new Phaser.Point(70,530); 
+		stickPosition=new Phaser.Point(70,530); 
 		magnitude=new Phaser.Point(0,0); 
 		direction=new Phaser.Point(0,0); 
+
+        // El Palo del Joystick		
 		stick=game.add.sprite(stickPosition.x, stickPosition.y, 'stick');
 		stick.anchor.setTo(0.5, 0.5);
 		game.physics.enable(stick, Phaser.Physics.ARCADE);
 
+        //Para poder mover el palo
+    	game.input.onDown.add(this.toDrag, this);
+
+        // El contorno del Joystick
 		contour=game.add.sprite(position.x, position.y, 'contour');
         contour.anchor.setTo(0.5, 0.5);
 
-	    //  Controles de keyboard y mouse
+	    //  Controles de teclado
 	    cursors = game.input.keyboard.createCursorKeys();
 	    fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
-    	game.input.onDown.add(this.toDrag, this);
 
 		if (game.device.touch)
 		{
@@ -209,22 +206,39 @@ var Game = {
 
 
 	},
+
+	toDrag: function() {
+	//	 if (!this.game.device.desktop) {
+	        stick.inputEnabled = true;
+	        stick.input.enableDrag();
+	 //    }
+	},
 	
 	onTouchStart: function (event) {
-		this.position = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
-        contour.position.copyFrom(this.position);
+		// En la mitad derecha activamos el disparo
+		if(game.input.activePointer.x > game.world.centerX ) {
+			this.fireLaser();			
+		// En la mitad izquierda el movimiento del joystick	
+		}else if (game.input.activePointer.x <= game.world.centerX ){
+			this.position = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
+	        contour.position.copyFrom(this.position);
+	        stick.position.copyFrom(this.position);			
+     	}
+
     },
 
 	onTouchMove: function (event) {
-		if(game.device.touch || game.input.activePointer.isDown) {
-		  var pos = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
-		  this.direction = Phaser.Point.subtract(pos, this.position);
-		  stick.position.copyFrom(pos); 
+		if((game.device.touch || game.input.activePointer.isDown) && (game.input.activePointer.x <= game.world.centerX )) {
+		  this.stickPosition = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
+		  this.direction = Phaser.Point.subtract(this.stickPosition, this.position);
 		  this.magnitude = this.direction.getMagnitudeSq();
-		  if(this.magnitude > 10)
+		  this.stickPosition.clampX(this.position.x-20,this.position.x+20);
+		  this.stickPosition.clampY(this.position.y-20,this.position.y+20);		
+          stick.position.copyFrom(this.stickPosition);
+		  if(this.magnitude >= 10)
 		  {  
 			this.magnitude = 10;
-	  	  }
+	      }
 		  player.body.velocity.x = this.direction.multiply(this.magnitude).x;
 	    }
     },
