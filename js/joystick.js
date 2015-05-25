@@ -34,7 +34,7 @@ var Joystick = function Joystick(game) {
             this.stickPosition = new Phaser.Point(game.input.x, game.input.y);        }
     }
 };
-/*
+
     setPosition: function(fingerPosition){ //TOUCH_MOVED
             this.computeDelta(fingerPosition); //compute the vector from finger to joystick 
             
@@ -93,4 +93,3 @@ if (magnitude > this.distSq) {
 }
 
 this.alien.position.copyFrom(pos);
-*/
