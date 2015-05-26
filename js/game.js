@@ -117,14 +117,14 @@ var Game = {
 		if (game.device.touch)
 		{
 	       game.input.touch.touchStartCallback = this.onTouchStart;
-	       game.input.touch.touchMoveCallback = this.onTouchMove;
-	       game.input.touch.touchEndCallback = this.onTouchLeave;	
+//	       game.input.touch.touchMoveCallback = this.onTouchMove;
+	       game.input.touch.touchEndCallback = this.onTouchEnd;	
 		}
 		else
 		{
 		   game.input.mouse.mouseDownCallback = this.onTouchStart;
-           game.input.mouse.mouseMoveCallback = this.onTouchMove;
-          game.input.mouse.mouseOutCallback = this.onTouchLeave;
+   //        game.input.mouse.mouseMoveCallback = this.onTouchMove;
+           game.input.mouse.mouseOutCallback = this.onTouchLeave;
        }
 
 	},
@@ -203,8 +203,15 @@ var Game = {
 //					this.fireLaser();
 //		}
 	    if (game.input.activePointer.isDown && game.input.activePointer.x > game.world.centerX ){
-			this.fireLaser();
+		   this.fireLaser();
 		}
+		else if(game.input.activePointer.isDown && game.input.activePointer.x <= game.world.centerX ) {
+			if(game.input.activePointer.x-position.x > 0) {
+		  	  player.body.velocity.x = 200;				
+			}else if(game.input.activePointer.x-position.x <= 0){
+			  player.body.velocity.x = -200;				
+			}
+	    }
         game.physics.arcade.overlap(lasers, aliens, this.collision, null, this);
         game.physics.arcade.overlap(alienBullets, player, this.alienHitPlayer, null, this);
 
@@ -236,36 +243,18 @@ var Game = {
 	
 	onTouchStart: function (event) {
 		 if (game.input.activePointer.x <= game.world.centerX ){
-			this.position = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
+			position = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
 //	        contour.position.copyFrom(this.position);
-//	        stick.position.copyFrom(this.position);			
-     	}
-
+//	        stick.position.copyFrom(this.position);	
+         }
     },
 
-	onTouchMove: function (event) {
-		console.log(event);
-		if(game.input.activePointer.isDown && game.input.activePointer.x <= game.world.centerX ) {
-		  this.stickPosition = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
-		  this.direction = Phaser.Point.subtract(this.stickPosition, this.position);
-		  this.magnitude = this.direction.getMagnitudeSq();
-//		  this.stickPosition.clampX(this.position.x-20,this.position.x+20);
-//		  this.stickPosition.clampY(this.position.y-20,this.position.y+20);		
- //         stick.position.copyFrom(this.stickPosition);
-		  if(this.magnitude >= 10)
-		  {  
-			this.magnitude = 10;
-	      }
-		  player.body.velocity.x = this.direction.multiply(this.magnitude).x;
-	    }
-    },
-
-	onTouchLeave: function (event) {
+	onTouchEnd: function (event) {
 		player.body.velocity.x = 0;
 	},	
  
 	render: function() {
-		console.log(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
+	//	console.log(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio);
 
 	},
 	
