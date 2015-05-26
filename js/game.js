@@ -27,6 +27,8 @@ var contour;
 var stick;
 var direction;
 var magnitude;
+var touchLeft;
+var touchRight;
 
 var Game = {
 	
@@ -112,7 +114,15 @@ var Game = {
 	    //  Controles de teclado
 	    cursors = game.input.keyboard.createCursorKeys();
 	    fire = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        
+        //Indicacion
+        touch = game.add.sprite(0,0,'touch');
+	    touch.anchor.setTo(0.5, 0.5);
+	    touch.visible = false
 
+        fireTouch = game.add.sprite(0,0,'fire');
+	    fireTouch.anchor.setTo(0.5, 0.5);
+	    fireTouch.visible = false
 
 		if (game.device.touch)
 		{
@@ -124,7 +134,7 @@ var Game = {
 		{
 		   game.input.mouse.mouseDownCallback = this.onTouchStart;
    //        game.input.mouse.mouseMoveCallback = this.onTouchMove;
-           game.input.mouse.mouseOutCallback = this.onTouchLeave;
+           game.input.mouse.mouseUpCallback = this.onTouchEnd;
        }
 
 	},
@@ -207,7 +217,7 @@ var Game = {
 		}
 		else if(game.input.activePointer.isDown && game.input.activePointer.x <= game.world.centerX ) {
 			if(game.input.activePointer.x-position.x > 0) {
-		  	  player.body.velocity.x = 200;				
+		  	  player.body.velocity.x = 200;  
 			}else if(game.input.activePointer.x-position.x <= 0){
 			  player.body.velocity.x = -200;				
 			}
@@ -244,6 +254,8 @@ var Game = {
 	onTouchStart: function (event) {
 		 if (game.input.activePointer.x <= game.world.centerX ){
 			position = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
+			touch.kill();
+			fireTouch.kill();
 //	        contour.position.copyFrom(this.position);
 //	        stick.position.copyFrom(this.position);	
          }
@@ -251,6 +263,21 @@ var Game = {
 
 	onTouchEnd: function (event) {
 		player.body.velocity.x = 0;
+		var pos = new Phaser.Point(game.input.activePointer.x, game.input.activePointer.y);
+		if(game.input.activePointer.x <= game.world.centerX ) {
+			touch.position.copyFrom(pos);
+			touch.visible=true; 
+            touch.alpha = 1; 
+            game.add.tween(touch).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+			touch.revive();
+		}else if(game.input.activePointer.x > game.world.centerX ){
+		    fireTouch.position.copyFrom(pos);
+            fireTouch.visible=true; 		
+            fireTouch.alpha = 1;
+            game.add.tween(fireTouch).to( { alpha: 0 }, 2000, Phaser.Easing.Linear.None, true, 0, 0, false);
+		    fireTouch.revive();				
+		}
+
 	},	
  
 	render: function() {
