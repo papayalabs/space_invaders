@@ -19,7 +19,8 @@ var Boot = {
 	        else
 	        {
 	            this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	            this.scale.setMinMax(480, 260, 1024, 1024*(window.innerHeight * window.devicePixelRatio/window.innerWidth * window.devicePixelRatio));
+	            var ratio = window.innerHeight * window.devicePixelRatio/window.innerWidth * window.devicePixelRatio;
+	            this.scale.setMinMax(480, 480*(ratio), 1024, 1024*(ratio));
 	            this.scale.pageAlignHorizontally = true;
 	            this.scale.pageAlignVertically = true;
 	            this.scale.forceOrientation(true, false);

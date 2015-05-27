@@ -215,10 +215,11 @@ var Game = {
 	    if (game.input.activePointer.isDown && game.input.activePointer.x > game.world.centerX ){
 		   this.fireLaser();
 		}
-		else if(game.input.activePointer.isDown && game.input.activePointer.x <= game.world.centerX ) {
+		if(game.input.activePointer.isDown && game.input.activePointer.x <= game.world.centerX ) {
 			if(game.input.activePointer.x-position.x > 0) {
 		  	  player.body.velocity.x = 200;  
-			}else if(game.input.activePointer.x-position.x <= 0){
+			}
+			if(game.input.activePointer.x-position.x <= 0){
 			  player.body.velocity.x = -200;				
 			}
 	    }
